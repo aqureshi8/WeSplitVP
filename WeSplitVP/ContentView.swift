@@ -15,7 +15,8 @@ struct ContentView: View {
     @State private var tipPercentage: Int = 20
     
     let currencyCode = Locale.current.currency?.identifier ?? "USD"
-   
+    let tipAmounts = [15, 20, 25, 0]
+    
     var total: Double {
         amount * Double(100 + tipPercentage) / 100
     }
@@ -39,11 +40,11 @@ struct ContentView: View {
             Spacer()
             Section("Tip Percentage") {
                 Picker("Tip Perecentage", selection: $tipPercentage) {
-                    ForEach(1..<101, id: \.self) {
+                    ForEach(tipAmounts, id: \.self) {
                         Text($0, format: .percent)
                     }
                 }
-                .pickerStyle(.navigationLink)
+                .pickerStyle(.segmented)
             }
             Spacer()
             Section("Total") {
