@@ -26,35 +26,34 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            Spacer()
-            Section("Bill Amount") {
-                TextField("Amount",
-                          value: $amount,
-                          format: .currency(code: currencyCode))
-                Picker("People Count", selection: $peopleCount) {
-                    ForEach(1..<99, id: \.self) {
-                        Text("\($0) People")
+            Form {
+                Section("Bill Amount") {
+                    TextField("Amount",
+                              value: $amount,
+                              format: .currency(code: currencyCode))
+                    .keyboardType(.decimalPad)
+                    Picker("People Count", selection: $peopleCount) {
+                        ForEach(1..<99, id: \.self) {
+                            Text("\($0) People")
+                        }
                     }
                 }
-            }
-            Spacer()
-            Section("Tip Percentage") {
-                Picker("Tip Perecentage", selection: $tipPercentage) {
-                    ForEach(tipAmounts, id: \.self) {
-                        Text($0, format: .percent)
+                Section("Tip Percentage") {
+                    Picker("Tip Perecentage", selection: $tipPercentage) {
+                        ForEach(tipAmounts, id: \.self) {
+                            Text($0, format: .percent)
+                        }
                     }
+                    .pickerStyle(.segmented)
                 }
-                .pickerStyle(.segmented)
+                Section("Total") {
+                    Text(total, format: .currency(code: currencyCode))
+                }
+                Section("Amount per person") {
+                    Text(amountPerPerson, format: .currency(code: currencyCode))
+                }
             }
-            Spacer()
-            Section("Total") {
-                Text(total, format: .currency(code: currencyCode))
-            }
-            Spacer()
-            Section("Amount per person") {
-                Text(amountPerPerson, format: .currency(code: currencyCode))
-            }
-            Spacer()
+            .navigationTitle("WeSplit App")
         }
     }
 }
